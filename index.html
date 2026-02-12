@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>For My Beautiful Wife ❤️</title>
+    <title>Funny Valentine Card</title>
 
     <style>
       body {
@@ -26,21 +26,12 @@
         backdrop-filter: blur(10px);
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         position: relative;
-        width: 90%;
-        max-width: 420px;
+        z-index: 2;
       }
 
       h1 {
-        margin-bottom: 25px;
-        font-size: 1.8rem;
-      }
-
-      .buttons {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        position: relative;
-        transition: all 0.3s ease;
+        margin-bottom: 20px;
+        font-size: 2rem;
       }
 
       button {
@@ -49,7 +40,8 @@
         border: none;
         border-radius: 50px;
         cursor: pointer;
-        transition: all 0.25s ease;
+        margin: 10px;
+        transition: 0.3s ease;
       }
 
       #yesBtn {
@@ -60,7 +52,7 @@
       #noBtn {
         background: #dc3545;
         color: white;
-        position: relative;
+        position: absolute;
       }
 
       .hidden {
@@ -69,9 +61,9 @@
 
       .heart {
         position: absolute;
-        font-size: 22px;
+        font-size: 20px;
         animation: float 6s linear infinite;
-        opacity: 0.8;
+        opacity: 0.7;
       }
 
       @keyframes float {
@@ -89,7 +81,7 @@
       }
 
       .final-message {
-        font-size: 1.8rem;
+        font-size: 2rem;
         animation: pop 0.6s ease forwards;
       }
 
@@ -107,14 +99,10 @@
   <body>
     <div class="card">
       <h1 id="question">Will you be my Valentine? 💕</h1>
-
-      <div class="buttons" id="buttonsContainer">
-        <button id="yesBtn">Yes 💖</button>
-        <button id="noBtn">No 🙈</button>
-      </div>
-
+      <button id="yesBtn">Yes 💖</button>
+      <button id="noBtn">No 🙈</button>
       <div id="final" class="final-message hidden">
-        I knew it! You’re stuck with me forever 😄❤️
+        I knew it! You are stuck with me forever 😄❤️
       </div>
     </div>
 
@@ -123,19 +111,16 @@
       const noBtn = document.getElementById("noBtn");
       const final = document.getElementById("final");
       const question = document.getElementById("question");
-      const buttonsContainer = document.getElementById("buttonsContainer");
       const card = document.querySelector(".card");
 
       let yesScale = 1;
 
-      // Move NO before mouse fully sits on it
-      noBtn.addEventListener("mousemove", (e) => {
+      function moveNoButton() {
         const cardRect = card.getBoundingClientRect();
         const btnRect = noBtn.getBoundingClientRect();
 
-        // Larger movement range
-        const maxX = cardRect.width - btnRect.width - 40;
-        const maxY = cardRect.height - btnRect.height - 40;
+        const maxX = cardRect.width - btnRect.width - 20;
+        const maxY = cardRect.height - btnRect.height - 20;
 
         const randomX = Math.random() * maxX;
         const randomY = Math.random() * maxY;
@@ -144,23 +129,21 @@
         noBtn.style.left = randomX + "px";
         noBtn.style.top = randomY + "px";
 
-        // Center YES button nicely
-        buttonsContainer.style.justifyContent = "center";
-
-        // Grow YES button
-        yesScale += 0.15;
+        // Grow Yes button slightly
+        yesScale += 0.1;
         yesBtn.style.transform = `scale(${yesScale})`;
-      });
+      }
 
-      // When YES clicked
+      noBtn.addEventListener("mouseenter", moveNoButton);
+
       yesBtn.addEventListener("click", () => {
-        question.classList.add("hidden");
-        buttonsContainer.classList.add("hidden");
+        question.style.display = "none";
+        yesBtn.style.display = "none";
+        noBtn.style.display = "none";
         final.classList.remove("hidden");
-        createHearts(60);
+        createHearts(50);
       });
 
-      // Floating hearts
       function createHearts(count) {
         for (let i = 0; i < count; i++) {
           const heart = document.createElement("div");
